@@ -4,7 +4,9 @@
 #
 # -----------------------------------------------------
 
+from os import error
 from typing import Optional
+
 from PIL import Image
 from PIL.ExifTags import TAGS
 
@@ -37,12 +39,17 @@ def get_exif_dict_list(image: Image) -> list:
 
     exifList = []
 
-    for key, val in exifData.items():
-        exifList.append({
-            "id": key,
-            "tag": TAGS[key],
-            "value": val
-        })
+    try:
+        for key, val in exifData.items():
+            exifList.append({
+                "id": key,
+                "tag": TAGS[key],
+                "value": val
+            })
+
+    except:
+        # Ignore unknown exif ids
+        pass
 
     return exifList
 

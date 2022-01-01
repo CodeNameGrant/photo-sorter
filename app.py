@@ -1,13 +1,16 @@
 import os
 from datetime import datetime
+
+from cs50 import get_string
 from PIL import Image
 
-from get_exif_data import get_exif_item, EXIF_DATETIME_FORMAT
+from get_exif_data import EXIF_DATETIME_FORMAT, get_exif_item
+from utilities import get_directory
 
-
-input_path = 'raw'
-output_path = 'sorted'
+input_path = ""
+output_path = ""
 unsorted_dir_name = "_unsorted"
+
 
 SHORT_DATE_FORMAT = "%Y-%m-%d"
 
@@ -57,10 +60,23 @@ def create_dir(path):
 
 
 def main():
+    global input_path
+    global output_path
+
+    input_path = get_directory(
+        "Enter the directory where the unsorted photos are:\n")
+    print("")
+
+    output_path = get_string(
+        "Enter the directory where sorted photos must be placed:\n")
+    print("")
+
     print(f"Read from {input_path}")
     print(f"Copy To {output_path}")
 
     process_dir(input_path)
+
+    print("Complete.")
 
 
 if __name__ == "__main__":
