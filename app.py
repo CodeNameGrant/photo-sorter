@@ -12,23 +12,22 @@ unsorted_dir_name = "_unsorted"
 SHORT_DATE_FORMAT = "%Y-%m-%d"
 
 
-def processDir(dirPath):
+def process_dir(dirPath):
     for dirEntry in os.scandir(dirPath):
         if dirEntry.is_dir():
-            processDir(dirEntry.path)
+            process_dir(dirEntry.path)
 
         else:
-            processFile(dirEntry)
+            process_file(dirEntry)
 
 
-def copyImage(image, dir, fileName):
+def copy_image(image, dir, fileName):
     create_dir(dir)
     copy = image.copy()
     copy.save(dir + "/" + fileName)
 
 
-def processFile(dirEntry):
-
+def process_file(dirEntry):
     try:
         with Image.open(dirEntry.path) as image:
             # default directory is unsorted
@@ -43,7 +42,7 @@ def processFile(dirEntry):
 
                 dir = output_path + "/" + date.strftime(SHORT_DATE_FORMAT)
 
-            copyImage(image, dir, dirEntry.name)
+            copy_image(image, dir, dirEntry.name)
 
     except OSError:
         print("Not an Image File")
@@ -61,7 +60,7 @@ def main():
     print(f"Read from {input_path}")
     print(f"Copy To {output_path}")
 
-    processDir(input_path)
+    process_dir(input_path)
 
 
 if __name__ == "__main__":
